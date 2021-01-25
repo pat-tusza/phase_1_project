@@ -14,6 +14,11 @@ User.reset_pk_sequence
 Mood.reset_pk_sequence
 Recipe.reset_pk_sequence
 
+
+def create_recipe_joins(recipe, ingredient_array)
+    ingredient_array.each{|ingredient| RecipeIngredients.create(recipe_id: recipe.id, ingredient_id: ingredient.id)}
+end
+
 ########### Ingredients ############
 vodka = Ingredient.create("Vodka")
 tequila = Ingredient.create("Tequila")
@@ -48,6 +53,7 @@ puts " 🙃🙃🙃🙃🙃  "
 
 ########### Recipes #######
 gin_and_tonic = Recipe.create("Gin and Tonic", 1)
+create_recipe_joins(gin_and_tonic, [gin, tonic])
 long_island = Recipe.create("Long Island Iced Tea", 3)
 screw_driver = Recipe.create("Screw Driver", 1)
 whisky_sour = Recipe.create("Whisky sour", 5)
