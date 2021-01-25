@@ -1,5 +1,5 @@
 class UserMood < ActiveRecord::Base
 
-  belong_to :user
-  belong_to :mood
+  belongs_to :user
+  belongs_to :mood
 end
