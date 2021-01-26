@@ -5,18 +5,18 @@ Mood.destroy_all
 Recipe.destroy_all
 Ingredient.destroy_all
 UserMood.destroy_all
-RecipeIngredients.destroy_all
+RecipeIngredient.destroy_all
 
 Ingredient.reset_pk_sequence
 UserMood.reset_pk_sequence
-RecipeIngredients.reset_pk_sequence
+RecipeIngredient.reset_pk_sequence
 User.reset_pk_sequence
 Mood.reset_pk_sequence
 Recipe.reset_pk_sequence
 
 
 def create_recipe_joins(recipe, ingredient_array)
-    ingredient_array.each{|ingredient| RecipeIngredients.create(recipe_id: recipe.id, ingredient_id: ingredient.id)}
+    ingredient_array.each{|ingredient| RecipeIngredient.create(recipe_id: recipe.id, ingredient_id: ingredient.id)}
 end
 
 ########### Ingredients ############
