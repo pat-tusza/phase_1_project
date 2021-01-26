@@ -54,15 +54,15 @@ class Interface
     end
 
     def mood_screen
-        binding.pry
-        prompt.select("How are you feeling today?") do |menu|
-            # binding.pry
-            menu.choice "Happy", -> {self.change_user_mood(1)}
-            menu.choice "Sad", -> {self.change_user_mood(2)}
-            menu.choice "Tense", -> {self.change_user_mood(3)}
-            menu.choice "Frisky", -> {self.change_user_mood(4)}
-            menu.choice "Excited", -> {self.change_user_mood(5)}
-        end
+        # binding.pry
+        # prompt.select("How are you feeling today?") do |menu|
+        #     # binding.pry
+        #     menu.choice "Happy", -> {change_user_mood}
+        #     menu.choice "Sad", -> {change_user_mood}
+        #     menu.choice "Tense", -> {change_user_mood}
+        #     menu.choice "Frisky", -> {change_user_mood}
+        #     menu.choice "Excited", -> {change_user_mood)}
+        # end
     end
     
     
