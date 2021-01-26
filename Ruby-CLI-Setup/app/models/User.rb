@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
         UserMood.create(user_id: self.id, mood_id: mood)
     end
     
-    def $change_user_mood(int)
+    def change_user_mood(int)
         self.user_moods.first.update(mood_id: int)
         self.reload
     end
