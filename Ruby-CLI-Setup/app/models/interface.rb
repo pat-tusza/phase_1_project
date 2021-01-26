@@ -31,13 +31,17 @@ class Interface
     end
 
     def sign_up_helper
-        name =prompt.ask("Enter Username")
+        name = prompt.ask("Enter Username")
         while User.find_by(name: name)
             puts "This username is already taken."
             name = prompt.ask("Enter Username")
         end
         pass = prompt.ask("Enter Password")
         self.user = User.create(name: name, pass: pass)
+        home_screen
+    end
+
+    def home_screen
     end
 
 
