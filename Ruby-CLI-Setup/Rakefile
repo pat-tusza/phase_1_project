@@ -12,9 +12,8 @@ end
 
 desc "start our app"
 task :start do
-  interface =Interface.new
-  Interface.welcome
-  Interface.log_in
+  interface = Interface.new
+  interface.welcome
 end
 
 namespace :remind_me_about do
