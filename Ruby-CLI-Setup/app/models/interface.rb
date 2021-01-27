@@ -58,43 +58,18 @@ class Interface
         prompt.select("How are you feeling today?") do |menu|
             # binding.pry
             menu.choice "Happy", -> {change_user_mood(1)}
-            menu.choice "Sad", -> {change_user_mood}
-            menu.choice "Tense", -> {change_user_mood}
-            menu.choice "Frisky", -> {change_user_mood}
-            menu.choice "Excited", -> {change_user_mood}
+            menu.choice "Sad", -> {change_user_mood(2)}
+            menu.choice "Tense", -> {change_user_mood(3)}
+            menu.choice "Frisky", -> {change_user_mood(4)}
+            menu.choice "Excited", -> {change_user_mood(5)}
         end
     end
     
     def change_user_mood(mood)
-        binding.pry
+        # binding.pry
+        self.user.user_moods.first.update(mood_id: mood)
     end
-    # def connect_user(name, pass)
-    #     hug = User.find_by(name: name , pass: pass)
-    #     if hug = self.user
-
-
-    # # end
-    # def create_user_mood(mood)
-    #     hug = User.find_by(name: name , pass: pass)
-    #     if hug = self.user
-    #         UserMood.create(user_id: self.id, mood_id: mood)
-    #     end
-    # end
-    
-
-    # def create_user_mood(mood)
-    #     hug = User.find_by(name: name , pass: pass)
-    #         if hug = self.user
-    #         UserMood.create(user_id: self.id, mood_id: mood)
-    #         end
-    #     end
-    # end
-    
-    # def update_user_mood(int)
-    #     self.user_moods.first.update(mood_id: int)
-    #     self.reload
-    # end
-
+  
     # def home_screen
     # end
 

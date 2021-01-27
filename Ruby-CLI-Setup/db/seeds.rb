@@ -77,7 +77,7 @@ puts "🎮🎮🎮 "
 
 ####### Dummy UserMood data (delete when done testing please =) ) #########
 
-
+UserMood.create(user_id: 1, mood_id: 4)
 UserMood.create(user_id: 2, mood_id: 3)
 UserMood.create(user_id: 3, mood_id: 5)
 UserMood.create(user_id: 4, mood_id: 1)
