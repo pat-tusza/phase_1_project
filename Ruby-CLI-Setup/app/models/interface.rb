@@ -89,20 +89,52 @@ class Interface
         main_menu
     end
   
-    def home_screen
-        
-    end
-
     def main_menu
-        puts "this is a test, if you are reading this, hi tester 🥳🥳🥳🥳🥳"
-        #this will have five options
-        # -give me recipes -> method to retrive recipes based on mood
-        # -give me a random one -> method to retrive a random recipe based on mood
-        # -i wanna change my mood -> #mood_screen
-        # -i wanna delete my account -> method to delete current account
-        # -i wanna sign off -> method to log off 
+        prompt.select("Main Menu") do |menu|
+
+            menu.choice "See all recipes", -> {see_recipes}
+            menu.choice "Surprise me", -> {random_recipe}
+            menu.choice "Change Mood", -> {mood_screen}
+            menu.choice "Delete Account", -> {delete_account}
+            menu.choice "Log Off", -> {log_off}
+        end
     end
 
+    def log_off
+        puts "See ya later, Alligator!"
+        sleep(1)
+        welcome
+    end
+
+    def delete_account
+        current_user = User.find(self.user.id)
+        current_user.delete
+        puts "Your account has successfully been deleted."
+        sleep(1)
+        welcome
+    end
+
+    def random_recipe
+        random = Recipe.where(mood_id: self.user.user_moods.first.mood_id)
+        new_random = random.sample 
+        puts new_random.name
+        puts new_random.ingredients.map(&:name)
+        prompt.select ("Select from options") do |menu|
+            menu.choice "Show me another recipe", -> {random_recipe}
+            menu.choice "Bring me back to the main menu", -> {main_menu}
+        end
+    end
+    
+    def see_recipes
+        recipe = Recipe.where(mood_id: self.user.user_moods.first.mood_id)
+        chosen_recipe = prompt.select( "Which recipe do you want to see", recipe)
+        puts chosen_recipe.name
+        puts chosen_recipe.ingredients.map(&:name)
+        prompt.select(" Select from options") do |menu|
+            menu.choice "Show me another recipe", -> {see_recipes}
+            menu.choice "Go back to main menu", -> {main_menu}
+        end
+    end
 
 end
 
