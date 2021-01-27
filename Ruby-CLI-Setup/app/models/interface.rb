@@ -9,13 +9,13 @@ class Interface
     end
 
     def welcome
-        puts "Welcome to Mixr!"
+        Logo.go
+        puts "Welcome to MixR!"
         sleep(0.5)
         log_in
     end
     
     def log_in
-        # binding.pry
         prompt.select("What would you like to do?") do |menu|
             menu.choice "Log in", -> {log_in_helper}
             menu.choice "Sign up", -> {sign_up_helper}
@@ -25,6 +25,8 @@ class Interface
     
     def exit_helper
         puts "Have a good day!"
+        sleep(1)
+        logo
         sleep(1)
     end
 
@@ -36,7 +38,7 @@ class Interface
             self.user = User.find_by(name: name, pass: pass)
             mood_screen
         else
-            puts "Incorrect Username or Password 🤭"
+            puts "Incorrect Username or Password ¯\_(ツ)_/¯"
             sleep(1)
             log_in
         end
@@ -54,9 +56,7 @@ class Interface
     end
 
     def mood_screen
-        # binding.pry
         prompt.select("How are you feeling today?") do |menu|
-            # binding.pry
             menu.choice "Happy", -> {change_user_mood(1)}
             menu.choice "Sad", -> {change_user_mood(2)}
             menu.choice "Tense", -> {change_user_mood(3)}
@@ -66,9 +66,7 @@ class Interface
     end
 
     def mood_screen_new
-        # binding.pry
         prompt.select("How are you feeling today?") do |menu|
-            # binding.pry
             menu.choice "Happy", -> {set_user_mood(1)}
             menu.choice "Sad", -> {set_user_mood(2)}
             menu.choice "Tense", -> {set_user_mood(3)}
@@ -78,20 +76,18 @@ class Interface
     end
     
     def change_user_mood(mood)
-        # binding.pry
         self.user.user_moods.first.update(mood_id: mood)
         main_menu
     end
 
     def set_user_mood(mood)
-        # binding.pry
         UserMood.create(user_id: self.user.id, mood_id: mood)
         main_menu
     end
   
     def main_menu
+        system 'clear'
         prompt.select("Main Menu") do |menu|
-
             menu.choice "See all recipes", -> {see_recipes}
             menu.choice "Surprise me", -> {random_recipe}
             menu.choice "Change Mood", -> {mood_screen}
@@ -109,15 +105,17 @@ class Interface
     def delete_account
         current_user = User.find(self.user.id)
         current_user.delete
-        puts "Your account has successfully been deleted."
-        sleep(1)
+        puts "Your account has successfully been deleted. ʕ •`ᴥ•´ʔ"
+        sleep(2)
         welcome
     end
 
     def random_recipe
+        sleep(1)
         random = Recipe.where(mood_id: self.user.user_moods.first.mood_id)
         new_random = random.sample 
         puts new_random.name
+        puts ""
         puts new_random.ingredients.map(&:name)
         prompt.select ("Select from options") do |menu|
             menu.choice "Show me another recipe", -> {random_recipe}
@@ -136,5 +134,32 @@ class Interface
         end
     end
 
-end
 
+    def logo
+        puts "
+        MMMMMMMM               MMMMMMMM  iiii                      RRRRRRRRRRRRRRRRR   
+        M:::::::M             M:::::::M i::::i                     R::::::::::::::::R  
+        M::::::::M           M::::::::M  iiii                      R::::::RRRRRR:::::R 
+        M:::::::::M         M:::::::::M                            RR:::::R     R:::::R
+        M::::::::::M       M::::::::::Miiiiiii xxxxxxx      xxxxxxx  R::::R     R:::::R
+        M:::::::::::M     M:::::::::::Mi:::::i  x:::::x    x:::::x   R::::R     R:::::R
+        M:::::::M::::M   M::::M:::::::M i::::i   x:::::x  x:::::x    R::::RRRRRR:::::R 
+        M::::::M M::::M M::::M M::::::M i::::i    x:::::xx:::::x     R:::::::::::::RR  
+        M::::::M  M::::M::::M  M::::::M i::::i     x::::::::::x      R::::RRRRRR:::::R 
+        M::::::M   M:::::::M   M::::::M i::::i      x::::::::x       R::::R     R:::::R
+        M::::::M    M:::::M    M::::::M i::::i      x::::::::x       R::::R     R:::::R
+        M::::::M     MMMMM     M::::::M i::::i     x::::::::::x      R::::R     R:::::R
+        M::::::M               M::::::Mi::::::i   x:::::xx:::::x   RR:::::R     R:::::R
+        M::::::M               M::::::Mi::::::i  x:::::x  x:::::x  R::::::R     R:::::R
+        M::::::M               M::::::Mi::::::i x:::::x    x:::::x R::::::R     R:::::R
+        MMMMMMMM               MMMMMMMMiiiiiiiixxxxxxx      xxxxxxxRRRRRRRR     RRRRRRR".colorize(:magenta)
+        puts"                                  
+                                       （ ^_^）o自自o（^_^ ）                             ".colorize(:green)
+        # sleep(3)
+        # welcome
+
+    end
+
+end
+#:blue
+#:magenta
