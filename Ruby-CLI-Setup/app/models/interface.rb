@@ -10,7 +10,7 @@ class Interface
 
     def welcome
         Logo.go
-        puts "Welcome to MixR!"
+        puts "Welcome to MixR!".colorize(:magenta)
         sleep(0.5)
         log_in
     end
@@ -57,21 +57,21 @@ class Interface
 
     def mood_screen
         prompt.select("How are you feeling today?") do |menu|
-            menu.choice "Happy", -> {change_user_mood(1)}
-            menu.choice "Sad", -> {change_user_mood(2)}
-            menu.choice "Tense", -> {change_user_mood(3)}
-            menu.choice "Frisky", -> {change_user_mood(4)}
-            menu.choice "Excited", -> {change_user_mood(5)}
+            menu.choice "Happy".colorize(:yellow), -> {change_user_mood(1)}
+            menu.choice "Sad".colorize(:light_blue), -> {change_user_mood(2)}
+            menu.choice "Tense".colorize(:green), -> {change_user_mood(3)}
+            menu.choice "Frisky".colorize(:red), -> {change_user_mood(4)}
+            menu.choice "Excited".colorize(:magenta), -> {change_user_mood(5)}
         end
     end
 
     def mood_screen_new
         prompt.select("How are you feeling today?") do |menu|
-            menu.choice "Happy", -> {set_user_mood(1)}
-            menu.choice "Sad", -> {set_user_mood(2)}
-            menu.choice "Tense", -> {set_user_mood(3)}
-            menu.choice "Frisky", -> {set_user_mood(4)}
-            menu.choice "Excited", -> {set_user_mood(5)}
+            menu.choice "Happy".colorize(:yellow), -> {set_user_mood(1)}
+            menu.choice "Sad".colorize(:light_blue), -> {set_user_mood(2)}
+            menu.choice "Tense".colorize(:green), -> {set_user_mood(3)}
+            menu.choice "Frisky".colorize(:red), -> {set_user_mood(4)}
+            menu.choice "Excited".colorize(:magenta), -> {set_user_mood(5)}
         end
     end
     
@@ -127,6 +127,7 @@ class Interface
         recipe = Recipe.where(mood_id: self.user.user_moods.first.mood_id)
         chosen_recipe = prompt.select( "Which recipe do you want to see", recipe)
         puts chosen_recipe.name
+        puts ""
         puts chosen_recipe.ingredients.map(&:name)
         prompt.select(" Select from options") do |menu|
             menu.choice "Show me another recipe", -> {see_recipes}
@@ -154,12 +155,8 @@ class Interface
         M::::::M               M::::::Mi::::::i x:::::x    x:::::x R::::::R     R:::::R
         MMMMMMMM               MMMMMMMMiiiiiiiixxxxxxx      xxxxxxxRRRRRRRR     RRRRRRR".colorize(:magenta)
         puts"                                  
-                                       （ ^_^）o自自o（^_^ ）                             ".colorize(:green)
-        # sleep(3)
-        # welcome
+                                       （ ^_^）o自自o（^_^ ）                             ".colorize(:cyan)
 
     end
 
 end
-#:blue
-#:magenta
