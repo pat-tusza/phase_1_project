@@ -50,7 +50,7 @@ class Interface
         end
         pass = prompt.ask("Enter Password")
         self.user = User.create(name: name, pass: pass)
-        # home_screen
+        mood_screen_new
     end
 
     def mood_screen
@@ -64,17 +64,44 @@ class Interface
             menu.choice "Excited", -> {change_user_mood(5)}
         end
     end
+
+    def mood_screen_new
+        # binding.pry
+        prompt.select("How are you feeling today?") do |menu|
+            # binding.pry
+            menu.choice "Happy", -> {set_user_mood(1)}
+            menu.choice "Sad", -> {set_user_mood(2)}
+            menu.choice "Tense", -> {set_user_mood(3)}
+            menu.choice "Frisky", -> {set_user_mood(4)}
+            menu.choice "Excited", -> {set_user_mood(5)}
+        end
+    end
     
     def change_user_mood(mood)
         # binding.pry
         self.user.user_moods.first.update(mood_id: mood)
+        main_menu
+    end
+
+    def set_user_mood(mood)
+        # binding.pry
+        UserMood.create(user_id: self.user.id, mood_id: mood)
+        main_menu
     end
   
-    # def home_screen
-    # end
+    def home_screen
+        
+    end
 
-    # def main_menu
-    # end
+    def main_menu
+        puts "this is a test, if you are reading this, hi tester 🥳🥳🥳🥳🥳"
+        #this will have five options
+        # -give me recipes -> method to retrive recipes based on mood
+        # -give me a random one -> method to retrive a random recipe based on mood
+        # -i wanna change my mood -> #mood_screen
+        # -i wanna delete my account -> method to delete current account
+        # -i wanna sign off -> method to log off 
+    end
 
 
 end
