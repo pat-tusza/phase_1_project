@@ -142,7 +142,7 @@ class Interface
     end
 
     def random_recipe
-        sleep(1)
+        system 'clear'
         random = Recipe.where(mood_id: self.user.user_moods.first.mood_id)
         new_random = random.sample 
         puts new_random.name
@@ -155,6 +155,7 @@ class Interface
     end
     
     def see_recipes
+        system 'clear'
         recipe = Recipe.where(mood_id: self.user.user_moods.first.mood_id)
         chosen_recipe = prompt.select( "Which recipe do you want to see", recipe)
         puts chosen_recipe.name
