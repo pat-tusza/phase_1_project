@@ -9,6 +9,8 @@ class Interface
     end
 
     def welcome
+        play_music
+        sleep(1.5)
         Logo.go
         puts "Welcome to MixR!".colorize(:magenta)
         sleep(0.5)
@@ -27,6 +29,7 @@ class Interface
         puts "Have a good day!"
         sleep(1)
         logo
+        stop_music
         sleep(1)
     end
 
@@ -34,8 +37,9 @@ class Interface
         name = prompt.ask("Enter Username")
         pass = prompt.ask("Enter Password")
         if User.find_by(name: name, pass: pass)
-            puts "Welcome Back!!"
             self.user = User.find_by(name: name, pass: pass)
+            puts "Welcome Back #{self.user.name}!!"
+            stop_music
             mood_screen
         else
             puts "Incorrect Username or Password ¯\_(ツ)_/¯"
@@ -52,13 +56,14 @@ class Interface
         end
         pass = prompt.ask("Enter Password")
         self.user = User.create(name: name, pass: pass)
+        stop_music
         mood_screen_new
     end
 
     def mood_screen
         prompt.select("How are you feeling today?") do |menu|
             menu.choice "Happy".colorize(:yellow), -> {change_user_mood(1)}
-            menu.choice "Sad".colorize(:light_blue), -> {change_user_mood(2)}
+            menu.choice "Sad".colorize(:light_blue), -> {sad_helper}
             menu.choice "Tense".colorize(:green), -> {change_user_mood(3)}
             menu.choice "Frisky".colorize(:red), -> {change_user_mood(4)}
             menu.choice "Excited".colorize(:magenta), -> {change_user_mood(5)}
@@ -68,7 +73,7 @@ class Interface
     def mood_screen_new
         prompt.select("How are you feeling today?") do |menu|
             menu.choice "Happy".colorize(:yellow), -> {set_user_mood(1)}
-            menu.choice "Sad".colorize(:light_blue), -> {set_user_mood(2)}
+            menu.choice "Sad".colorize(:light_blue), -> {sad_helper_new}
             menu.choice "Tense".colorize(:green), -> {set_user_mood(3)}
             menu.choice "Frisky".colorize(:red), -> {set_user_mood(4)}
             menu.choice "Excited".colorize(:magenta), -> {set_user_mood(5)}
@@ -84,6 +89,32 @@ class Interface
         UserMood.create(user_id: self.user.id, mood_id: mood)
         main_menu
     end
+
+    def sad_helper
+        puts "Hey, its okay to be sad =( but you really should not drink!!".colorize(:red)
+        sleep(1.5)
+        puts "Maybe go out with friends, take a walk and clear your head.".colorize(:yellow)
+        sleep(1.5)
+        puts "Come back when all is right =)".colorize(:green)
+        sleep(1.5)
+        prompt.select("Choose from options") do |menu|
+            menu.choice "Select a new mood", -> {mood_screen}
+            menu.choice "Log Off", -> {log_off}
+        end
+    end
+
+    def sad_helper_new
+        puts "Hey, its okay to be sad =( but you really should not drink!!".colorize(:red)
+        sleep(1.5)
+        puts "Maybe go out with friends, take a walk and clear your head.".colorize(:yellow)
+        sleep(1.5)
+        puts "Come back when all is right =)".colorize(:green)
+        sleep(1.5)
+        prompt.select("Choose from options") do |menu|
+            menu.choice "Select a new mood", -> {mood_screen_new}
+            menu.choice "Log Off", -> {log_off}
+        end
+    end
   
     def main_menu
         system 'clear'
@@ -97,7 +128,7 @@ class Interface
     end
 
     def log_off
-        puts "See ya later, Alligator!"
+        puts "See ya later, Alligator!".colorize(:green)
         sleep(1)
         welcome
     end
@@ -158,5 +189,15 @@ class Interface
                                        （ ^_^）o自自o（^_^ ）                             ".colorize(:cyan)
 
     end
+
+    def play_music
+        pid = fork{exec 'afplay', "Jump King - End Title Music.mp3"}
+    end
+
+    def stop_music
+        pid = fork{system 'killall', 'afplay'}
+    end
+
+
 
 end
