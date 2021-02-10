@@ -63,6 +63,7 @@ GEM
 
 PLATFORMS
   -darwin-20
+  x86_64-darwin-20
 
 DEPENDENCIES
   activerecord (~> 5.2)
@@ -77,4 +78,4 @@ DEPENDENCIES
   tty-prompt
 
 BUNDLED WITH
-   2.2.4
+   2.2.8

@@ -26,6 +26,7 @@ class Interface
     end   
     
     def exit_helper
+        system 'clear'
         puts "Have a good day!"
         sleep(1)
         logo
