@@ -82,7 +82,7 @@ class Interface
     end
     
     def change_user_mood(mood)
-        self.user.user_moods.first.update(mood_id: mood)
+        self.user.user_moods.update(mood_id: mood)
         main_menu
     end
 
